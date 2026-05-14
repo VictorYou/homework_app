@@ -39,6 +39,20 @@ pipeline {
         stage('deploy dev') {
             when {
                 allOf {
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    def region = 'us-east-1'
+                    def eks = regionEks[region]
+                    deployApp(region, dockerImage, eks)
+                }
+            }
+        }
+        stage('deploy prod') {
+            when {
+                allOf {
                     branch 'main'
                 }
             }
