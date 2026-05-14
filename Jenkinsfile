@@ -44,8 +44,9 @@ pipeline {
             }
             steps {
                 script {
+                    def region = 'us-west-1'
                     def eks = regionEks[region]
-                    deployApp('us-west-1', dockerImage, eks)
+                    deployApp(region, dockerImage, eks)
                 }
             }
         }
