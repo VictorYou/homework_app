@@ -1,3 +1,6 @@
+def dockerTag = ""
+def dockerImage = ""
+
 pipeline {
     agent any
     options {
@@ -16,23 +19,30 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                //    docker.build("test:latest", "--build-arg=arg=Debug -f Dockerfile . ")
-                    def scmVars = checkout changelog: false, poll: false,
-                         scm: [
-                           $class: 'GitSCM',
-                           branches: BRANCH_NAME,
-                           doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-                           extensions: scmExtensions,
-                           userRemoteConfigs: scm.userRemoteConfigs
-                         ]
-                    def gitCommit = scmVars.GIT_COMMIT
+                    def gitCommit = sh script: "git log HEAD -1 --pretty=format:%H", returnStdout: true
                     def shortGitCommit = gitCommit ? gitCommit[0..6] : "0000000"
                     def dateNow = new Date().format( 'yyyy-MM-dd' )
-                    def dockerTag = args.dockerTag ?: "${dateNow}.${env.BUILD_NUMBER}-${shortGitCommit}-${envTag}"
+                    dockerTag = "${dateNow}.${env.BUILD_NUMBER}-${shortGitCommit}"
+                    dockerImage = "viyou/hello-app:${dockerTag}"
+                    dir('hello-app') {
+                        docker.build(dockerImage)
+                    }
                     docker.withRegistry("https://index.docker.io/v1/", 'docker_user') {
-                    def image = docker.image("viyou/hello-app:3.0")
-                    image.push()
-                  }
+                        def image = docker.image(dockerImage)
+                        image.push()
+                    }
+                    currentBuild.displayName = dockerTag
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                script {
+                    sh """
+                    kustomize edit set image hello-app-image=${dockerImage}
+                    kustomize build > deployment.yaml
+                    kubectl apply -f deployment.yaml
+                    """
                 }
             }
         }
