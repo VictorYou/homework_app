@@ -43,7 +43,8 @@ pipeline {
                 }
             }
             steps {
-                deployApp('us-west-1', dockerImage)
+                def eks = regionEks[region]
+                deployApp('us-west-1', dockerImage, eks)
             }
         }
     }
@@ -55,7 +56,7 @@ pipeline {
 }
 
 
-def deployApp(region, dockerImage) {
+def deployApp(region, dockerImage, eks) {
     script {
         dir("deployment/${region}") {
             withCredentials([usernamePassword(credentialsId: 'docker_user',
@@ -67,7 +68,6 @@ def deployApp(region, dockerImage) {
                 kustomize build > deployment.yaml
                 """
             }
-            def eks = regionEks[region]
             runKubectl(region, eks) { file->
                 sh """
                 export KUBECONFIG=${file}
