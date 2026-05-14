@@ -20,7 +20,7 @@ pipeline {
                     def scmVars = checkout changelog: false, poll: false,
                          scm: [
                            $class: 'GitSCM',
-                           branches: scmBranches,
+                           branches: BRANCH_NAME,
                            doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
                            extensions: scmExtensions,
                            userRemoteConfigs: scm.userRemoteConfigs
