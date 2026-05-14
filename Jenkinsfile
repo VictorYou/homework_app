@@ -41,7 +41,7 @@ pipeline {
                         kustomize build > deployment.yaml
                         """
 
-                        withCredentials([usernamePassword(credentialsId: id,
+                        withCredentials([usernamePassword(credentialsId: 'docker_user',
                             passwordVariable: 'TOKEN',
                             usernameVariable: 'USER')]) {
                             sh """
