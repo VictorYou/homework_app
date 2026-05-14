@@ -39,8 +39,16 @@ pipeline {
                         sh """
                         kustomize edit set image hello-app-image=${dockerImage}
                         kustomize build > deployment.yaml
-                        kubectl apply -f deployment.yaml
                         """
+
+                        withCredentials([usernamePassword(credentialsId: id,
+                            passwordVariable: 'TOKEN',
+                            usernameVariable: 'USER')]) {
+                            sh """
+                            echo ${TOKEN} | sudo docker login -u ${USER} --password-stdin
+                            kubectl apply -f deployment.yaml
+                            """
+                        }
                     }
                 }
             }
