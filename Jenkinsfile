@@ -43,7 +43,7 @@ pipeline {
                 }
             }
             steps {
-                deployApp('us-west-1')
+                deployApp('us-west-1', dockerImage)
             }
         }
     }
@@ -55,7 +55,7 @@ pipeline {
 }
 
 
-def deployApp(region) {
+def deployApp(region, dockerImage) {
     script {
         dir("deployment/${region}") {
             withCredentials([usernamePassword(credentialsId: 'docker_user',
