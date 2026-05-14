@@ -37,6 +37,11 @@ pipeline {
             }
         }
         stage('deploy dev') {
+            when {
+                allOf {
+                    branch 'main'
+                }
+            }
             steps {
                 deployApp('us-west-1')
             }
@@ -62,7 +67,6 @@ def deployApp(region) {
                 kustomize build > deployment.yaml
                 """
             }
-            def region = 'us-west-1'
             def eks = regionEks[region]
             runKubectl(region, eks) { file->
                 sh """
