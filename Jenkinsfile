@@ -54,6 +54,7 @@ pipeline {
                             sh """
                             export KUBECONFIG=${file}
                             kubectl apply -f deployment.yaml
+                            kubectl rollout status deploy hello-app
                             """
                         }
                     }
