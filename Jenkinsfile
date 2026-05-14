@@ -1,7 +1,8 @@
 def dockerTag = ""
 def dockerImage = ""
 def regionEks = [
-    "us-west-1": "floral-hiphop-gopher"
+    "us-west-1": "floral-hiphop-gopher",
+    "us-east-1": "unique-alternative-sparrow"
 ]
 
 pipeline {
@@ -35,30 +36,9 @@ pipeline {
                 }
             }
         }
-        stage('deploy') {
+        stage('deploy dev') {
             steps {
-                script {
-                    dir("deployment/us-west-1") {
-                        withCredentials([usernamePassword(credentialsId: 'docker_user',
-                            passwordVariable: 'TOKEN',
-                            usernameVariable: 'USER')]) {
-                            sh """
-                            echo ${TOKEN} | docker login -u ${USER} --password-stdin
-                            kustomize edit set image hello-app-image=${dockerImage}
-                            kustomize build > deployment.yaml
-                            """
-                        }
-                        def region = 'us-west-1'
-                        def eks = regionEks[region]
-                        runKubectl(region, eks) { file->
-                            sh """
-                            export KUBECONFIG=${file}
-                            kubectl apply -f deployment.yaml
-                            kubectl rollout status deploy hello-app
-                            """
-                        }
-                    }
-                }
+                deployApp('us-west-1')
             }
         }
     }
@@ -69,6 +49,31 @@ pipeline {
     }
 }
 
+
+def deployApp(region) {
+    script {
+        dir("deployment/${region}") {
+            withCredentials([usernamePassword(credentialsId: 'docker_user',
+                passwordVariable: 'TOKEN',
+                usernameVariable: 'USER')]) {
+                sh """
+                echo ${TOKEN} | docker login -u ${USER} --password-stdin
+                kustomize edit set image hello-app-image=${dockerImage}
+                kustomize build > deployment.yaml
+                """
+            }
+            def region = 'us-west-1'
+            def eks = regionEks[region]
+            runKubectl(region, eks) { file->
+                sh """
+                export KUBECONFIG=${file}
+                kubectl apply -f deployment.yaml
+                kubectl rollout status deploy hello-app
+                """
+            }
+        }
+    }
+}
 
 def runKubectl(region, eks, clo=null) {
     def timestamp = new Date().format('yyyy-MM-dd_HH-mm-ss')
