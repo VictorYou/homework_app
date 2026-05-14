@@ -1,5 +1,8 @@
 def dockerTag = ""
 def dockerImage = ""
+def regionEks = [
+    "us-west-1": "floral-hiphop-gopher"
+]
 
 pipeline {
     agent any
@@ -63,9 +66,10 @@ pipeline {
 }
 
 
-def runKubectl(environment, clo=null) {
+def runKubectl(region, clo=null) {
     def timestamp = new Date().format('yyyy-MM-dd_HH-mm-ss')
     def tmpKubeconfig = "kubeconfig_${timestamp}"
+    def eks = regionEks[region]
 
     withCredentials([
         aws(
@@ -74,7 +78,7 @@ def runKubectl(environment, clo=null) {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         )]) {
         sh """
-        aws eks update-kubeconfig --name ${cluster} --region ${region} --kubeconfig ${tmp_kubeconfig}
+        aws eks update-kubeconfig --name ${eks} --region ${region} --kubeconfig ${tmp_kubeconfig}
         """
         if (clo) {
             clo.call(tmpKubeconfig)
