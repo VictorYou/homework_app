@@ -48,7 +48,9 @@ pipeline {
                             kustomize build > deployment.yaml
                             """
                         }
-                        runKubectl('us-west-1') {
+                        def region = 'us-west-1'
+                        def eks = regionEks(region)
+                        runKubectl(region, eks) {
                             sh """
                             kubectl apply -f deployment.yaml
                             """
@@ -66,10 +68,9 @@ pipeline {
 }
 
 
-def runKubectl(region, clo=null) {
+def runKubectl(region, eks, clo=null) {
     def timestamp = new Date().format('yyyy-MM-dd_HH-mm-ss')
     def tmpKubeconfig = "kubeconfig_${timestamp}"
-    def eks = regionEks[region]
 
     withCredentials([
         aws(
