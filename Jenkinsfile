@@ -40,14 +40,16 @@ pipeline {
                             passwordVariable: 'TOKEN',
                             usernameVariable: 'USER')]) {
                             sh """
-                            echo ${TOKEN} | sudo docker login -u ${USER} --password-stdin
+                            echo ${TOKEN} | docker login -u ${USER} --password-stdin
                             kustomize edit set image hello-app-image=${dockerImage}
                             kustomize build > deployment.yaml
                             """
                         }
-                        sh """
-                        kubectl apply -f deployment.yaml
-                        """
+                        runKubectl('us-west-1') {
+                            sh """
+                            kubectl apply -f deployment.yaml
+                            """
+                        }
                     }
                 }
             }
@@ -56,6 +58,26 @@ pipeline {
     post {
         always {
             deleteDir()
+        }
+    }
+}
+
+
+def runKubectl(environment, clo=null) {
+    def timestamp = new Date().format('yyyy-MM-dd_HH-mm-ss')
+    def tmpKubeconfig = "kubeconfig_${timestamp}"
+
+    withCredentials([
+        aws(
+          credentialsId: "aws-credentials-us-west-1",
+          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        )]) {
+        sh """
+        aws eks update-kubeconfig --name ${cluster} --region ${region} --kubeconfig ${tmp_kubeconfig}
+        """
+        if (clo) {
+            clo.call(tmpKubeconfig)
         }
     }
 }
