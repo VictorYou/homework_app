@@ -36,19 +36,18 @@ pipeline {
             steps {
                 script {
                     dir("deployment/us-west-1") {
-                        sh """
-                        kustomize edit set image hello-app-image=${dockerImage}
-                        kustomize build > deployment.yaml
-                        """
-
                         withCredentials([usernamePassword(credentialsId: 'docker_user',
                             passwordVariable: 'TOKEN',
                             usernameVariable: 'USER')]) {
                             sh """
                             echo ${TOKEN} | sudo docker login -u ${USER} --password-stdin
-                            kubectl apply -f deployment.yaml
+                            kustomize edit set image hello-app-image=${dockerImage}
+                            kustomize build > deployment.yaml
                             """
                         }
+                        sh """
+                        kubectl apply -f deployment.yaml
+                        """
                     }
                 }
             }
