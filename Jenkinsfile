@@ -50,8 +50,9 @@ pipeline {
                         }
                         def region = 'us-west-1'
                         def eks = regionEks[region]
-                        runKubectl(region, eks) {
+                        runKubectl(region, eks) { file->
                             sh """
+                            export KUBECONFIG=${file}
                             kubectl apply -f deployment.yaml
                             """
                         }
@@ -79,7 +80,7 @@ def runKubectl(region, eks, clo=null) {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         )]) {
         sh """
-        aws eks update-kubeconfig --name ${eks} --region ${region} --kubeconfig ${tmp_kubeconfig}
+        aws eks update-kubeconfig --name ${eks} --region ${region} --kubeconfig ${tmpKubeconfig}
         """
         if (clo) {
             clo.call(tmpKubeconfig)
