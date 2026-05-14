@@ -12,9 +12,6 @@ pipeline {
         timestamps()
         timeout(time: 24, unit: 'HOURS')
     }
-    parameters {
-        string(name: 'GOLDEN_TEST1', defaultValue: 'yes', description: '')
-    }
     stages {
         stage('build') {
             steps {
@@ -38,18 +35,20 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    sh """
-                    kustomize edit set image hello-app-image=${dockerImage}
-                    kustomize build > deployment.yaml
-                    kubectl apply -f deployment.yaml
-                    """
+                    dir("deployment/us-west-1") {
+                        sh """
+                        kustomize edit set image hello-app-image=${dockerImage}
+                        kustomize build > deployment.yaml
+                        kubectl apply -f deployment.yaml
+                        """
+                    }
                 }
             }
         }
     }
     post {
         always {
-            cleanWs disableDeferredWipeout: true, notFailBuild: true
+            deletedir()
         }
     }
 }
