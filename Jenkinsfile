@@ -49,7 +49,7 @@ pipeline {
                             """
                         }
                         def region = 'us-west-1'
-                        def eks = regionEks(region)
+                        def eks = regionEks[region]
                         runKubectl(region, eks) {
                             sh """
                             kubectl apply -f deployment.yaml
