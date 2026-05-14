@@ -43,8 +43,10 @@ pipeline {
                 }
             }
             steps {
-                def eks = regionEks[region]
-                deployApp('us-west-1', dockerImage, eks)
+                script {
+                    def eks = regionEks[region]
+                    deployApp('us-west-1', dockerImage, eks)
+                }
             }
         }
     }
@@ -57,24 +59,22 @@ pipeline {
 
 
 def deployApp(region, dockerImage, eks) {
-    script {
-        dir("deployment/${region}") {
-            withCredentials([usernamePassword(credentialsId: 'docker_user',
-                passwordVariable: 'TOKEN',
-                usernameVariable: 'USER')]) {
-                sh """
-                echo ${TOKEN} | docker login -u ${USER} --password-stdin
-                kustomize edit set image hello-app-image=${dockerImage}
-                kustomize build > deployment.yaml
-                """
-            }
-            runKubectl(region, eks) { file->
-                sh """
-                export KUBECONFIG=${file}
-                kubectl apply -f deployment.yaml
-                kubectl rollout status deploy hello-app
-                """
-            }
+    dir("deployment/${region}") {
+        withCredentials([usernamePassword(credentialsId: 'docker_user',
+            passwordVariable: 'TOKEN',
+            usernameVariable: 'USER')]) {
+            sh """
+            echo ${TOKEN} | docker login -u ${USER} --password-stdin
+            kustomize edit set image hello-app-image=${dockerImage}
+            kustomize build > deployment.yaml
+            """
+        }
+        runKubectl(region, eks) { file->
+            sh """
+            export KUBECONFIG=${file}
+            kubectl apply -f deployment.yaml
+            kubectl rollout status deploy hello-app
+            """
         }
     }
 }
