@@ -9,7 +9,7 @@ configurations:
 configMapGenerator:
 - behavior: merge
   literals:
-  - GLOBAL_REGION_CODE="us-east-1"
+  - GLOBAL_REGION_CODE="us-east-2"
   name: hello-app
 images:
 - name: hello-app-image

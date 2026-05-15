@@ -1,0 +1,24 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hello-app
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: hello-app
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageValue: 700m
+          type: AverageValue
+      type: Resource
+    - resource:
+        name: memory
+        target:
+          averageValue: 700Mi
+          type: AverageValue
+      type: Resource
