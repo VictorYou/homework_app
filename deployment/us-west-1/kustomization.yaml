@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - ../base_prod
 - ./hpa.yaml
+- ./secret-db.yaml
 configurations:
 - name-reference.yaml
 configMapGenerator:
@@ -13,7 +14,7 @@ configMapGenerator:
 images:
 - name: hello-app-image
   newName: viyou/hello-app
-  newTag: "3"
+  newTag: 2026-05-14.35-453f4fb
 
 patches:
 - path: deployment_workload_patch.yaml
