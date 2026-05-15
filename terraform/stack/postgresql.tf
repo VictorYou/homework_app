@@ -28,23 +28,20 @@ resource "aws_db_instance" "postgres" {
 resource "aws_db_subnet_group" "postgres" {
   name = "postgres-subnet-group"
 
-  subnet_ids = [
-    "subnet-0f33e3ea62752f61e",
-    "subnet-0a589de5d3123fe0a"
-  ]
+  subnet_ids = var.subnet_ids
 }
 
 resource "aws_security_group" "postgres" {
   name        = "postgres-sg"
   description = "Allow PostgreSQL"
 
-  vpc_id = "vpc-0fe862b1e74c2b8d3"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = var.inbound_blocks
   }
 
   egress {
