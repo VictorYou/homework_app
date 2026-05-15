@@ -5,4 +5,9 @@ curl http://k8s-default-helloapp-0a61f2990a-1930622708.us-west-1.elb.amazonaws.c
 ```
 or you can directly open in your browser: http://k8s-default-helloapp-0a61f2990a-1930622708.us-west-1.elb.amazonaws.com/
 
-To build/deploy the app, you can build [https://homework-jenkins.ddns.net:30036/job/deploy_app/](http://13.57.252.126:8080/job/build-app/) you can login with admin / 123456
+To build/deploy the app, you can build http://13.57.252.126:8080/job/build-app/job/main/, you can login with admin / 123456
+
+# Development process
+After code commit, you can trigger build to test environment: http://13.57.252.126:8080/job/build-app/job/develop/
+
+Then you can check if you can see 'Hello, world!' from http://k8s-default-helloapp-5adbaed677-846255158.us-east-1.elb.amazonaws.com
