@@ -14,11 +14,13 @@ App source code is placed under hello-app folder.
 # Infrastructure
 postgresql is maintained under terraform folder. To maintain production postgresql.
 ```hcl
+export AWS_REGION=us-west-1
 cd terraform/us-west-1
 terraform workspace select prod
 ```
 To maintain development postgresql.
 ```hcl
+export AWS_REGION=us-east-1
 cd terraform/us-east-1
 terraform workspace select dev
 ```
