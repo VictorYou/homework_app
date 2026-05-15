@@ -11,6 +11,9 @@ App is deployed to an eks cluster.
 
 App source code is placed under hello-app folder.
 
+<img width="519" height="428" alt="image" src="https://github.com/user-attachments/assets/f1703966-b91e-4acb-adf3-ce1c019230ce" />
+
+
 # Infrastructure
 postgresql is maintained under terraform folder. To maintain production postgresql.
 ```hcl
