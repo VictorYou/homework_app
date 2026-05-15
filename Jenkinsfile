@@ -5,7 +5,7 @@ def regionEksDev = [
 ]
 
 def regionEksProd = [
-    "us-east-1": "unique-alternative-sparrow"
+    "us-west-1": "floral-hiphop-gopher"
 ]
 
 pipeline {
