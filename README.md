@@ -40,7 +40,8 @@ Jenkins pipeline is used for CICD purpose. A docker image is built and pushed to
 1 pipeline is for build/deploy to non production clusters.
 <img width="1379" height="606" alt="image" src="https://github.com/user-attachments/assets/873ec53d-46d9-4048-9973-c0f5d49702b4" />
 another pipeline is for build/deploy to production cluster.
-<img width="1243" height="617" alt="image" src="https://github.com/user-attachments/assets/198539e7-30ae-427a-b13b-4b12282b3a06" />
+<img width="1378" height="617" alt="image" src="https://github.com/user-attachments/assets/db95ad92-5d9b-4e86-a371-c33e0e983780" />
+
 
 
 
