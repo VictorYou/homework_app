@@ -47,7 +47,8 @@ pipeline {
             }
             steps {
                 script {
-                    def eks = regionEksDev['us-east-1']
+                    def region = 'us-east-1'
+                    def eks = regionEksDev[region]
                     deployApp(region, dockerImage, eks)
                 }
             }
@@ -60,7 +61,8 @@ pipeline {
             }
             steps {
                 script {
-                    def eks = regionEksProd['us-west-1']
+                    def region = 'us-west-1'
+                    def eks = regionEksProd[region]
                     deployApp(region, dockerImage, eks)
                 }
             }
