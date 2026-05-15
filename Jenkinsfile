@@ -5,7 +5,7 @@ def regionEksDev = [
 ]
 
 def regionEksProd = [
-    "us-east-1": "unique-alternative-sparrow"
+    "us-west-1": "floral-hiphop-gopher"
 ]
 
 pipeline {
@@ -47,8 +47,7 @@ pipeline {
             }
             steps {
                 script {
-                    def region = 'us-east-1'
-                    def eks = regionEksDev[region]
+                    def eks = regionEksDev['us-east-1']
                     deployApp(region, dockerImage, eks)
                 }
             }
@@ -61,8 +60,7 @@ pipeline {
             }
             steps {
                 script {
-                    def region = 'us-west-1'
-                    def eks = regionEksProd[region]
+                    def eks = regionEksProd['us-west-1']
                     deployApp(region, dockerImage, eks)
                 }
             }
