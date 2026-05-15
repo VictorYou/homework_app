@@ -7,10 +7,16 @@ or you can directly open in your browser: http://k8s-default-helloapp-0a61f2990a
 
 To build/deploy the app, you can build http://13.57.252.126:8080/job/build-app/job/main/, you can login with admin / 123456
 
+App is deployed to an eks cluster.
+
+App source code is placed under hello-app folder and postgresql is maintained under terraform folder.
+
 # Development process
-After code commit, you can trigger build to test environment: http://13.57.252.126:8080/job/build-app/job/develop/
+After code commit to develop branch, you can trigger build http://13.57.252.126:8080/job/build-app/job/develop/, which builds the image and deploys it to the test eks cluster.
 
 Then you can check if you can see 'Hello, world!' from http://k8s-default-helloapp-5adbaed677-846255158.us-east-1.elb.amazonaws.com
+
+Then you can merge code to main branch and build http://13.57.252.126:8080/job/build-app/job/main/, which builds and deploys to production environment.
 
 # CICD pipeline
 Jenkins pipeline is used for CICD purpose. A docker image is built and pushed to docker registry, and kustomize is used to generate cluster specific manifest for deployment.
