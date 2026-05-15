@@ -35,7 +35,7 @@ Then you can check if you can see 'Hello, world!' from
 
 dev: http://k8s-default-helloapp-8761c05495-54562740.us-east-1.elb.amazonaws.com
 
-test: https://k8s-default-helloapp-e111ce21e1-828157227.us-east-2.elb.amazonaws.com
+test: http://k8s-default-helloapp-e111ce21e1-828157227.us-east-2.elb.amazonaws.com
 
 Then you can merge code to main branch and build http://13.57.252.126:8080/job/build-app/job/main/, which builds and deploys to production environment.
 
