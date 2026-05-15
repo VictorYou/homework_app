@@ -29,9 +29,11 @@ cd terraform/us-east-1
 terraform workspace select dev
 ```
 # Development process
-After code commit to develop branch, you can trigger build http://13.57.252.126:8080/job/build-app/job/develop/, which builds the image and deploys it to the test eks cluster.
+After code commit to develop branch, you can trigger build http://13.57.252.126:8080/job/build-app/job/develop/, which builds the image and deploys it to the dev/test eks cluster.
 
-Then you can check if you can see 'Hello, world!' from http://k8s-default-helloapp-8761c05495-54562740.us-east-1.elb.amazonaws.com
+Then you can check if you can see 'Hello, world!' from 
+dev: http://k8s-default-helloapp-8761c05495-54562740.us-east-1.elb.amazonaws.com
+test: https://k8s-default-helloapp-e111ce21e1-828157227.us-east-2.elb.amazonaws.com
 
 Then you can merge code to main branch and build http://13.57.252.126:8080/job/build-app/job/main/, which builds and deploys to production environment.
 
