@@ -11,7 +11,8 @@ App is deployed to an eks cluster.
 
 App source code is placed under hello-app folder.
 
-<img width="519" height="428" alt="image" src="https://github.com/user-attachments/assets/f1703966-b91e-4acb-adf3-ce1c019230ce" />
+<img width="566" height="424" alt="image" src="https://github.com/user-attachments/assets/55fe1998-bf68-40ca-9a38-f2f09b3382ae" />
+
 
 
 # Infrastructure
