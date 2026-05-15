@@ -1,0 +1,8 @@
+nameReference:
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+    - kind: Certificate
+      version: v1
+      group: cert-manager.io
+      path: spec/keystores/pkcs12/passwordSecretRef/name
