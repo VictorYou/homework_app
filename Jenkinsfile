@@ -1,7 +1,8 @@
 def dockerTag = ""
 def dockerImage = ""
 def regionEksDev = [
-    "us-east-1": "unique-alternative-sparrow"
+    "us-east-1": "fabulous-rock-crow",
+    "us-east-2": "beautiful-indie-unicorn"
 ]
 
 def regionEksProd = [
@@ -48,6 +49,20 @@ pipeline {
             steps {
                 script {
                     def region = 'us-east-1'
+                    def eks = regionEksDev[region]
+                    deployApp(region, dockerImage, eks)
+                }
+            }
+        }
+        stage('deploy test') {
+            when {
+                allOf {
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    def region = 'us-east-2'
                     def eks = regionEksDev[region]
                     deployApp(region, dockerImage, eks)
                 }
