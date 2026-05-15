@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - ../base_dev
 - ./hpa.yaml
+- ./secret-db.yaml
 configurations:
 - name-reference.yaml
 configMapGenerator:
