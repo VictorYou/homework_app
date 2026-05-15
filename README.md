@@ -9,8 +9,21 @@ To build/deploy the app, you can build http://13.57.252.126:8080/job/build-app/j
 
 App is deployed to an eks cluster.
 
-App source code is placed under hello-app folder and postgresql is maintained under terraform folder.
+App source code is placed under hello-app folder.
 
+# Infrastructure
+postgresql is maintained under terraform folder. To maintain production postgresql.
+```hcl
+export AWS_REGION=us-west-1
+cd terraform/us-west-1
+terraform workspace select prod
+```
+To maintain development postgresql.
+```hcl
+export AWS_REGION=us-east-1
+cd terraform/us-east-1
+terraform workspace select dev
+```
 # Development process
 After code commit to develop branch, you can trigger build http://13.57.252.126:8080/job/build-app/job/develop/, which builds the image and deploys it to the test eks cluster.
 
