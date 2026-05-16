@@ -45,9 +45,10 @@ Jenkins pipeline is used for CICD purpose.
 Server: http://13.57.252.126:8080/, username: admin, password: 123456
 
 A docker image is built and pushed to docker registry, and kustomize is used to generate cluster specific manifest for deployment.
-1 pipeline is for build/deploy to non production clusters.
+
+One pipeline is for build/deploy to non production clusters.
 <img width="1375" height="534" alt="image" src="https://github.com/user-attachments/assets/1c93bf2e-02a3-44a6-8865-681de3429812" />
-another pipeline is for build/deploy to production cluster.
+Another pipeline is for build/deploy to production cluster.
 <img width="1378" height="617" alt="image" src="https://github.com/user-attachments/assets/db95ad92-5d9b-4e86-a371-c33e0e983780" />
 
 
