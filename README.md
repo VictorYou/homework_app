@@ -4,6 +4,8 @@ This deploys a dummy app to eks, and when you curl it, it should return Hello, w
 curl http://k8s-default-helloapp-0a61f2990a-1930622708.us-west-1.elb.amazonaws.com/
 ```
 or you can directly open in your browser: http://k8s-default-helloapp-0a61f2990a-1930622708.us-west-1.elb.amazonaws.com/
+<img width="781" height="153" alt="image" src="https://github.com/user-attachments/assets/59c6a54a-29dd-4d25-b8ff-d75c63c8a008" />
+
 
 To build/deploy the app, you can build http://13.57.252.126:8080/job/build-app/job/main/, you can login with admin / 123456
 
