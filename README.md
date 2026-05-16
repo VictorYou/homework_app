@@ -18,18 +18,10 @@ App source code is placed under hello-app folder.
 
 
 # Infrastructure
-postgresql is maintained under terraform folder. To maintain production postgresql.
-```hcl
-export AWS_REGION=us-west-1
-cd terraform/us-west-1
-terraform workspace select prod
-```
-To maintain development postgresql.
-```hcl
-export AWS_REGION=us-east-1
-cd terraform/us-east-1
-terraform workspace select dev
-```
+postgresql is maintained under terraform folder. To maintain production postgresql, you can go to terraform/us-west-1 folder.
+
+To maintain development postgresql, you can go to terraform/us-east-1 folder.
+
 # Development process
 After code commit to develop branch, you can trigger build http://13.57.252.126:8080/job/build-app/job/develop/, which builds the image and deploys it to the dev/test eks cluster.
 
