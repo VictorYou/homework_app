@@ -118,7 +118,7 @@ def runKubectl(region, eks, clo=null) {
 
     withCredentials([
         aws(
-          credentialsId: "aws-credentials-us-west-1",
+          credentialsId: "aws-credentials",
           accessKeyVariable: 'AWS_ACCESS_KEY_ID',
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         )]) {
