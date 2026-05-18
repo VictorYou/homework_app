@@ -7,7 +7,7 @@ or you can directly open in your browser: http://k8s-default-helloapp-0a61f2990a
 <img width="781" height="153" alt="image" src="https://github.com/user-attachments/assets/59c6a54a-29dd-4d25-b8ff-d75c63c8a008" />
 
 
-To build/deploy the app, you can build http://13.57.252.126:8080/job/build-app/job/main/, you can login with admin / 123456
+To build/deploy the app, you can build https://13.57.202.108/job/hello-app/job/main/, you can login with admin / 123456
 
 App is deployed to an eks cluster.
 
@@ -23,7 +23,7 @@ postgresql is maintained under terraform folder. To maintain production postgres
 To maintain development postgresql, you can go to terraform/us-east-1 folder.
 
 # Development process
-After code commit to develop branch, you can trigger build http://13.57.252.126:8080/job/build-app/job/develop/, which builds the image and deploys it to the dev/test eks cluster.
+After code commit to develop branch, you can trigger build https://13.57.202.108/job/hello-app/job/develop/, which builds the image and deploys it to the dev/test eks cluster.
 
 Then you can check if you can see 'Hello, world!' from
 
@@ -31,7 +31,7 @@ dev: http://k8s-default-helloapp-8761c05495-54562740.us-east-1.elb.amazonaws.com
 
 test: http://k8s-default-helloapp-e111ce21e1-828157227.us-east-2.elb.amazonaws.com
 
-Then you can merge code to main branch and build http://13.57.252.126:8080/job/build-app/job/main/, which builds and deploys to production environment.
+Then you can merge code to main branch and build https://13.57.202.108/job/hello-app/job/main/ which builds and deploys to production environment.
 
 # CICD pipeline
 Jenkins pipeline is used for CICD purpose. 
