@@ -36,7 +36,7 @@ Then you can merge code to main branch and build https://13.57.202.108/job/hello
 # CICD pipeline
 Jenkins pipeline is used for CICD purpose. 
 
-Server: http://13.57.252.126:8080/, username: admin, password: 123456
+Server: https://13.57.202.108/, username: admin, password: 123456
 
 A docker image is built and pushed to docker registry, and kustomize is used to generate cluster specific manifest for deployment.
 
