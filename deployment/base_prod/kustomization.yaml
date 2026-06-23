@@ -6,6 +6,6 @@ configMapGenerator:
   - name: hello-app
     behavior: merge
     literals:
-      - APP_ENV="dev"
+      - APP_ENV="prod"
 patches:
   - path: deployment_workload_patch.yaml
